@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOMOKA | Video Creator Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 
+        ==========================================================================
+        【★カスタマイズエリア1：背景・カラーテーマ設定】
+        以下のカラーコードを書き換えるだけで、サイト全体の雰囲気や背景を一新できます！
+        ==========================================================================
+        */
+        :root {
+            /* 1. サイト全体の基本背景（グラデーションの開始色と終了色） */
+            --bg-color-start: #0e0d11; /* 背景色（上部・暗め） */
+            --bg-color-end: #18151f;   /* 背景色（下部・やや明るい紫色を帯びたダーク） */
+            
+            /* 2. カードやセクション背景 */
+            --card-bg: rgba(26, 23, 34, 0.75);      /* カード背景（半透明） */
+            --card-border: rgba(230, 180, 195, 0.18); /* カード枠線色 */
+            --modal-bg: #15131d;                     /* モーダル背景 */
+
+            /* 3. ブランド・アクセントカラー (ローズゴールド / ピンクゴールド) */
+            --accent-primary: #e6b4c3;               /* 主アクセント（柔らかいピンクゴールド） */
+            --accent-secondary: #c893a3;             /* 濃いめアクセント */
+            --accent-glow: rgba(230, 180, 195, 0.35);  /* 光沢・グラデーション用 */
+
+            /* 4. テキストカラー */
+            --text-main: #f3f3f6;                    /* メイン文字色（ホワイト系） */
+            --text-muted: #a39eb0;                   /* 補足文字色（グレー系） */
+        }
+
+        /* 
+        ==========================================================================
+        【★カスタマイズエリア2：背景画像の切り替え（オプション）】
+        背景に画像やパターンを敷きたい場合は、下のコメントアウト(/* ... */)を外してURLを設定してください。
+        ==========================================================================
+        */
+        body {
+            background-color: var(--bg-color-start);
+            background-image: 
+                radial-gradient(circle at 15% 20%, var(--accent-glow) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(180, 140, 200, 0.15) 0%, transparent 45%),
+                linear-gradient(180deg, var(--bg-color-start) 0%, var(--bg-color-end) 100%);
+            /* background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23'); */ /* ← 画像背景にする場合 */
+            background-attachment: fixed;
+            background-size: cover;
+            color: var(--text-main);
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+
+        .custom-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 30px -10px var(--accent-glow);
+            transform: translateY(-4px);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f3d1dc 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
+            color: #1a1520;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(230, 180, 195, 0.25);
+        }
+
+        .btn-gold:hover {
+            box-shadow: 0 6px 22px rgba(230, 180, 195, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-primary) 60%, var(--accent-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 制作実績タブのアクティブスタイル */
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #1a1520;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-pink-300 selection:text-slate-900">
+
+    <!-- ヘッダーナビゲーション -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <span class="font-cinzel text-2xl font-bold tracking-widest text-gold-gradient">MOMOKA</span>
+                <span class="text-xs px-2 py-0.5 rounded border border-pink-300/30 text-pink-200 tracking-wider">CREATOR</span>
+            </a>
+
+            <!-- デスクトップナビ -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#about" class="hover:text-[var(--accent-primary)] transition-colors">About</a>
+                <a href="#works" class="hover:text-[var(--accent-primary)] transition-colors">Works</a>
+                <a href="#plans" class="hover:text-[var(--accent-primary)] transition-colors">Plans</a>
+                <a href="#simulator" class="hover:text-[var(--accent-primary)] transition-colors">Estimate</a>
+                <a href="#contact" class="btn-gold px-5 py-2.5 rounded-full text-xs tracking-wider uppercase">Contact Us</a>
+            </nav>
+
+            <!-- モバイルメニューボタン -->
+            <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-300 hover:text-white p-2">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- モバイルドロワーメニュー -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#15131d] border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="#about" class="block py-2 text-gray-300 hover:text-white">About</a>
+            <a href="#works" class="block py-2 text-gray-300 hover:text-white">Works</a>
+            <a href="#plans" class="block py-2 text-gray-300 hover:text-white">Plans</a>
+            <a href="#simulator" class="block py-2 text-gray-300 hover:text-white">Estimate</a>
+            <a href="#contact" class="block btn-gold text-center py-3 rounded-xl mt-4">Contact Us</a>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest border border-pink-300/30 bg-pink-500/10 text-[var(--accent-primary)] mb-6">
+                Video Creator & Editor
+            </span>
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold font-cinzel tracking-tight leading-tight mb-6">
+                Captivate Your Audience<br>
+                <span class="text-gold-gradient">In Seconds.</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-base sm:text-lg text-[var(--text-muted)] leading-relaxed mb-10">
+                TikTok, Instagram Reels, YouTube ShortsなどのSNS縦型ショート動画を中心に、店舗PR・ブランド映像まで。「思わずスクロールの手が止まる」高品質な映像表現を提供します。
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#works" class="btn-gold w-full sm:w-auto px-8 py-4 rounded-full text-sm font-bold tracking-wider">
+                    制作実績を見る <i class="fa-solid fa-play ml-2 text-xs"></i>
+                </a>
+                <a href="#simulator" class="w-full sm:w-auto px-8 py-4 rounded-full text-sm font-semibold border border-white/20 hover:border-pink-300/50 hover:bg-white/5 transition-all">
+                    料金シミュレーター
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 
+    ==========================================================================
+    【★制作実績 (Works / Portfolio) セクション】
+    ・タブ切り替え対応
+    ・カード形式で実績を紹介
+    ・コピペで実績を追加・編集できます
+    ==========================================================================
+    -->
+    <section id="works" class="py-24 relative border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-gold-gradient tracking-wider">WORKS</h2>
+                <p class="text-sm text-[var(--text-muted)] mt-2">これまでの制作事例・ポートフォリオ</p>
+            </div>
+
+            <!-- カテゴリタブ -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12" id="works-tabs">
+                <button class="tab-btn active px-6 py-2.5 rounded-full text-sm transition-all" data-category="all">すべて</button>
+                <button class="tab-btn px-6 py-2.5 rounded-full text-sm border border-white/10 hover:border-pink-300/40 text-[var(--text-muted)] hover:text-white transition-all" data-category="sns">SNSショート動画</button>
+                <button class="tab-btn px-6 py-2.5 rounded-full text-sm border border-white/10 hover:border-pink-300/40 text-[var(--text-muted)] hover:text-white transition-all" data-category="store">店舗・ブランディングPR</button>
+                <button class="tab-btn px-6 py-2.5 rounded-full text-sm border border-white/10 hover:border-pink-300/40 text-[var(--text-muted)] hover:text-white transition-all" data-category="youtube">YouTube・長尺動画</button>
+            </div>
+
+            <!-- 実績カードグリッド -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="works-grid">
+
+                <!-- 【編集ポイント：制作実績1】 -->
+                <div class="work-card custom-card rounded-2xl overflow-hidden group" data-category="sns">
+                    <div class="relative aspect-[9/16] bg-slate-900 overflow-hidden">
+                        <!-- 画像パスの変更は src="..." を変更してください -->
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="美容サロンSNSショート" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 left-4 text-xs bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-pink-200 border border-pink-300/20">
+                            Reels / TikTok
+                        </span>
+                        <button onclick="openVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-xs">
+                            <span class="w-16 h-16 rounded-full bg-[var(--accent-primary)] text-slate-900 flex items-center justify-center text-xl pl-1 shadow-lg transform group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-play"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-[var(--accent-primary)] font-medium mb-1">コスメ・美容ブランド</div>
+                        <h3 class="text-lg font-bold mb-2">【来店率140% UP】コスメブランド集客用ショート動画</h3>
+                        <p class="text-xs text-[var(--text-muted)] leading-relaxed mb-4">
+                            冒頭0.5秒で惹きつけるフックの設計と、トレンド音源に合わせたテンポの良いカット割りで再生数を爆発させました。
+                        </p>
+                        <div class="flex items-center justify-between pt-4 border-t border-white/10 text-xs text-[var(--text-muted)]">
+                            <span>企画 / 撮影 / 編集</span>
+                            <span class="text-pink-300"><i class="fa-solid fa-chart-line mr-1"></i> 120万回再生</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 【編集ポイント：制作実績2】 -->
+                <div class="work-card custom-card rounded-2xl overflow-hidden group" data-category="store">
+                    <div class="relative aspect-[16/9] md:aspect-[9/16] bg-slate-900 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" alt="カフェ店舗紹介" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 left-4 text-xs bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-pink-200 border border-pink-300/20">
+                            店舗PR / シネマティック
+                        </span>
+                        <button onclick="openVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-xs">
+                            <span class="w-16 h-16 rounded-full bg-[var(--accent-primary)] text-slate-900 flex items-center justify-center text-xl pl-1 shadow-lg transform group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-play"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-[var(--accent-primary)] font-medium mb-1">アパレル・カフェ</div>
+                        <h3 class="text-lg font-bold mb-2">隠れ家カフェ ブランディングPV</h3>
+                        <p class="text-xs text-[var(--text-muted)] leading-relaxed mb-4">
+                            シックなシネマティックトーンで店のこだわりと空気感を再現。Instagramの世界観を整えブランド価値を高めました。
+                        </p>
+                        <div class="flex items-center justify-between pt-4 border-t border-white/10 text-xs text-[var(--text-muted)]">
+                            <span>カラーグレーディング / 構成</span>
+                            <span class="text-pink-300"><i class="fa-solid fa-star mr-1"></i> 公式サイト掲載</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 【編集ポイント：制作実績3】 -->
+                <div class="work-card custom-card rounded-2xl overflow-hidden group" data-category="youtube">
+                    <div class="relative aspect-[16/9] bg-slate-900 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80" alt="YouTubeVlog編集" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 left-4 text-xs bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-pink-200 border border-pink-300/20">
+                            YouTube / Vlog
+                        </span>
+                        <button onclick="openVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-xs">
+                            <span class="w-16 h-16 rounded-full bg-[var(--accent-primary)] text-slate-900 flex items-center justify-center text-xl pl-1 shadow-lg transform group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-play"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-[var(--accent-primary)] font-medium mb-1">ライフスタイル・Vlog</div>
+                        <h3 class="text-lg font-bold mb-2">インフルエンサー チャンネル編集</h3>
+                        <p class="text-xs text-[var(--text-muted)] leading-relaxed mb-4">
+                            視聴維持率を高めるフルテロップと効果的な効果音挿入。離脱を防ぎチャンネル登録者数の増加に貢献しました。
+                        </p>
+                        <div class="flex items-center justify-between pt-4 border-t border-white/10 text-xs text-[var(--text-muted)]">
+                            <span>カット編集 / フルテロップ / BGM</span>
+                            <span class="text-pink-300"><i class="fa-solid fa-eye mr-1"></i> 視聴維持率55%超</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 
+                【実績を追加したい場合は、上記の <div class="work-card ..."> ... </div> ブロックをここにコピー＆ペーストして内容を書き換えてください】 
+                -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 動画閲覧モーダル -->
+    <div id="video-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="relative w-full max-w-4xl bg-[var(--modal-bg)] rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <button onclick="closeVideoModal()" class="absolute top-4 right-4 z-10 text-white hover:text-[var(--accent-primary)] text-2xl w-10 h-10 rounded-full bg-black/50 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="relative aspect-video w-full">
+                <iframe id="modal-iframe" class="w-full h-full" src="" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- プラン価格表セクション -->
+    <section id="plans" class="py-24 border-t border-white/5 bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-gold-gradient tracking-wider">PRICING PLANS</h2>
+                <p class="text-sm text-[var(--text-muted)] mt-2">ニーズに合わせた明確な料金プラン</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- ライト -->
+                <div class="custom-card rounded-2xl p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs uppercase tracking-widest text-[var(--accent-primary)] font-semibold mb-2">Lite Plan</div>
+                        <h3 class="text-2xl font-bold mb-4">SNSショート編集</h3>
+                        <p class="text-xs text-[var(--text-muted)] mb-6">素材をご提供いただき、カット・テロップ・音源付けを行うお気軽プラン。</p>
+                        <div class="text-3xl font-bold font-cinzel mb-6">¥15,000~ <span class="text-xs font-normal text-[var(--text-muted)]">/ 1本</span></div>
+                        <ul class="space-y-3 text-xs text-gray-300 mb-8">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> 60秒以内の縦型動画</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> カット編集・要点テロップ</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> BGM / 効果音選定</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> 修正2回まで無料</li>
+                        </ul>
+                    </div>
+                    <a href="#contact" class="w-full py-3 rounded-xl text-xs font-bold text-center border border-white/20 hover:border-pink-300 hover:bg-white/5 transition-all">お申し込み</a>
+                </div>
+
+                <!-- スタンダード (人気) -->
+                <div class="custom-card rounded-2xl p-8 flex flex-col justify-between relative border-[var(--accent-primary)] shadow-lg shadow-pink-500/10">
+                    <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 btn-gold text-[10px] font-extrabold uppercase px-4 py-1 rounded-full tracking-wider">MOST POPULAR</span>
+                    <div>
+                        <div class="text-xs uppercase tracking-widest text-[var(--accent-primary)] font-semibold mb-2">Standard Plan</div>
+                        <h3 class="text-2xl font-bold mb-4">企画 ＋ 構成フル編集</h3>
+                        <p class="text-xs text-[var(--text-muted)] mb-6">伸びる構成の提案から編集まで、エンゲージメントを最大化する標準プラン。</p>
+                        <div class="text-3xl font-bold font-cinzel mb-6">¥35,000~ <span class="text-xs font-normal text-[var(--text-muted)]">/ 1本</span></div>
+                        <ul class="space-y-3 text-xs text-gray-300 mb-8">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> 企画案・構成作成サポート</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> フルテロップ / アニメーション挿入</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> 冒頭フックデザイン強化</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> 修正3回まで無料</li>
+                        </ul>
+                    </div>
+                    <a href="#contact" class="btn-gold w-full py-3 rounded-xl text-xs font-bold text-center">お申し込み</a>
+                </div>
+
+                <!-- プレミアム -->
+                <div class="custom-card rounded-2xl p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs uppercase tracking-widest text-[var(--accent-primary)] font-semibold mb-2">Premium Plan</div>
+                        <h3 class="text-2xl font-bold mb-4">撮影 ＋ 運用おまかせ</h3>
+                        <p class="text-xs text-[var(--text-muted)] mb-6">現地撮影から編集、アカウント運用のコンサルティングまで丸ごとサポート。</p>
+                        <div class="text-3xl font-bold font-cinzel mb-6">¥120,000~ <span class="text-xs font-normal text-[var(--text-muted)]">/ 月(4本~)</span></div>
+                        <ul class="space-y-3 text-xs text-gray-300 mb-8">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> 都内近郊 現地撮影対応</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> 月4本分の動画制作全般</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> 投稿タイミング・ハッシュタグ分析</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-pink-300 mr-2"></i> 修正無制限</li>
+                        </ul>
+                    </div>
+                    <a href="#contact" class="w-full py-3 rounded-xl text-xs font-bold text-center border border-white/20 hover:border-pink-300 hover:bg-white/5 transition-all">お申し込み</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- インタラクティブ見積もりシミュレーター -->
+    <section id="simulator" class="py-24 border-t border-white/5">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="font-cinzel text-3xl font-bold text-gold-gradient">ESTIMATE SIMULATOR</h2>
+                <p class="text-sm text-[var(--text-muted)] mt-2">条件を選ぶだけで概算お見積もりを即時算出</p>
+            </div>
+
+            <div class="custom-card rounded-3xl p-6 sm:p-10">
+                <form id="sim-form" class="space-y-8">
+                    <!-- 1. 基本プラン -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 text-pink-200">1. ベースプランを選択</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <label class="cursor-pointer border border-white/10 p-4 rounded-xl hover:border-pink-300/40 transition-all flex items-center gap-3">
+                                <input type="radio" name="base_plan" value="15000" checked class="accent-pink-300" onchange="calculateTotal()">
+                                <div>
+                                    <div class="text-xs font-bold">ライト (編集のみ)</div>
+                                    <div class="text-[10px] text-gray-400">¥15,000/本</div>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer border border-white/10 p-4 rounded-xl hover:border-pink-300/40 transition-all flex items-center gap-3">
+                                <input type="radio" name="base_plan" value="35000" class="accent-pink-300" onchange="calculateTotal()">
+                                <div>
+                                    <div class="text-xs font-bold">スタンダード (企画+編集)</div>
+                                    <div class="text-[10px] text-gray-400">¥35,000/本</div>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer border border-white/10 p-4 rounded-xl hover:border-pink-300/40 transition-all flex items-center gap-3">
+                                <input type="radio" name="base_plan" value="60000" class="accent-pink-300" onchange="calculateTotal()">
+                                <div>
+                                    <div class="text-xs font-bold">フルオーダー (撮影+編集)</div>
+                                    <div class="text-[10px] text-gray-400">¥60,000/本</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 2. 本数 -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm font-semibold text-pink-200">2. 制作本数</label>
+                            <span id="count-display" class="text-sm font-bold text-pink-300">1 本</span>
+                        </div>
+                        <input type="range" id="video-count" min="1" max="10" value="1" class="w-full accent-pink-300" oninput="calculateTotal()">
+                    </div>
+
+                    <!-- 3. オプション -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 text-pink-200">3. 追加オプション</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="cursor-pointer border border-white/10 p-3.5 rounded-xl hover:border-pink-300/40 transition-all flex items-center gap-3">
+                                <input type="checkbox" id="opt-fast" value="10000" class="accent-pink-300" onchange="calculateTotal()">
+                                <span class="text-xs">特急納品（48時間以内） +¥10,000</span>
+                            </label>
+                            <label class="cursor-pointer border border-white/10 p-3.5 rounded-xl hover:border-pink-300/40 transition-all flex items-center gap-3">
+                                <input type="checkbox" id="opt-thumb" value="5000" class="accent-pink-300" onchange="calculateTotal()">
+                                <span class="text-xs">サムネイル制作 +¥5,000/枚</span>
+                            </label>
+                            <label class="cursor-pointer border border-white/10 p-3.5 rounded-xl hover:border-pink-300/40 transition-all flex items-center gap-3">
+                                <input type="checkbox" id="opt-multi" value="8000" class="accent-pink-300" onchange="calculateTotal()">
+                                <span class="text-xs">他SNS用リサイズ(16:9等) +¥8,000</span>
+                            </label>
+                            <label class="cursor-pointer border border-white/10 p-3.5 rounded-xl hover:border-pink-300/40 transition-all flex items-center gap-3">
+                                <input type="checkbox" id="opt-narr" value="12000" class="accent-pink-300" onchange="calculateTotal()">
+                                <span class="text-xs">プロナレーション手配 +¥12,000</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 見積もり結果 -->
+                    <div class="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs text-[var(--text-muted)]">概算合計金額（税込）</span>
+                            <div class="text-3xl sm:text-4xl font-bold font-cinzel text-gold-gradient" id="total-price">¥15,000</div>
+                        </div>
+                        <a href="#contact" onclick="copyEstimateToContact()" class="btn-gold px-8 py-3.5 rounded-full text-xs font-bold w-full sm:w-auto text-center">
+                            この内容でお問い合わせ
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- お問い合わせセクション -->
+    <section id="contact" class="py-24 border-t border-white/5 bg-black/30">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-gold-gradient mb-3">CONTACT</h2>
+            <p class="text-sm text-[var(--text-muted)] mb-10">ご相談・お見積もり依頼は下記フォームよりお気軽にどうぞ</p>
+
+            <form id="contact-form" class="space-y-5 text-left custom-card p-8 rounded-3xl" onsubmit="handleFormSubmit(event)">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-2">お名前 <span class="text-pink-300">*</span></label>
+                    <input type="text" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-300 transition-colors" placeholder="山田 太郎">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-2">メールアドレス <span class="text-pink-300">*</span></label>
+                    <input type="email" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-300 transition-colors" placeholder="example@email.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-2">お問い合わせ内容 / ご要望</label>
+                    <textarea id="contact-message" rows="5" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-300 transition-colors" placeholder="ご希望の動画タイプや納期などをご記入ください"></textarea>
+                </div>
+                <button type="submit" class="btn-gold w-full py-4 rounded-xl text-sm font-bold tracking-wider">
+                    メッセージを送信する
+                </button>
+            </form>
+            <div id="form-msg" class="hidden mt-4 p-4 rounded-xl bg-pink-500/20 border border-pink-300/30 text-xs text-pink-200"></div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="py-10 border-t border-white/5 text-center text-xs text-[var(--text-muted)]">
+        <p>&copy; 2026 MOMOKA Video Creator. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScriptインタラクション -->
+    <script>
+        // モバイルメニュー切り替え
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 実績タブ切り替え機能
+        const tabBtns = document.querySelectorAll('#works-tabs .tab-btn');
+        const workCards = document.querySelectorAll('#works-grid .work-card');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // アクティブ状態更新
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const category = btn.getAttribute('data-category');
+
+                workCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 動画モーダル制御
+        function openVideoModal(url) {
+            const modal = document.getElementById('video-modal');
+            const iframe = document.getElementById('modal-iframe');
+            iframe.src = url;
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('video-modal');
+            const iframe = document.getElementById('modal-iframe');
+            iframe.src = '';
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        // 見積もりシミュレーター計算
+        function calculateTotal() {
+            const basePlanPrice = parseInt(document.querySelector('input[name="base_plan"]:checked').value);
+            const count = parseInt(document.getElementById('video-count').value);
+            document.getElementById('count-display').innerText = `${count} 本`;
+
+            let subtotal = basePlanPrice * count;
+
+            if (document.getElementById('opt-fast').checked) subtotal += parseInt(document.getElementById('opt-fast').value);
+            if (document.getElementById('opt-thumb').checked) subtotal += parseInt(document.getElementById('opt-thumb').value) * count;
+            if (document.getElementById('opt-multi').checked) subtotal += parseInt(document.getElementById('opt-multi').value) * count;
+            if (document.getElementById('opt-narr').checked) subtotal += parseInt(document.getElementById('opt-narr').value);
+
+            document.getElementById('total-price').innerText = `¥${subtotal.toLocaleString()}`;
+        }
+
+        // 見積もり内容をお問い合わせフォームに引き継ぎ
+        function copyEstimateToContact() {
+            const count = document.getElementById('video-count').value;
+            const total = document.getElementById('total-price').innerText;
+            const msgBox = document.getElementById('contact-message');
+            msgBox.value = `【概算見積もり内容】\n本数: ${count}本\n予想金額: ${total}\n-------------------\n（ご詳細やご質問があればご記入ください）`;
+        }
+
+        // フォーム送信シミュレーション
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const msg = document.getElementById('form-msg');
+            msg.innerText = "お問い合わせありがとうございます！内容を確認の上、通常24時間以内にご返信いたします。";
+            msg.classList.remove('hidden');
+            document.getElementById('contact-form').reset();
+        }
+    </script>
+</body>
+</html>
