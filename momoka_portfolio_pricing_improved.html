@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOMOKA | Video Creator Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 
+        ==========================================================================
+        【★カスタマイズエリア1：背景・カラーテーマ設定】
+        以下のカラーコードを書き換えるだけで、サイト全体の雰囲気や背景を一新できます！
+        ==========================================================================
+        */
+        :root {
+            /* 1. サイト全体の基本背景（グラデーションの開始色と終了色） */
+            --bg-color-start: #0e0d11; /* 背景色（上部・暗め） */
+            --bg-color-end: #18151f;   /* 背景色（下部・やや明るい紫色を帯びたダーク） */
+            
+            /* 2. カードやセクション背景 */
+            --card-bg: rgba(26, 23, 34, 0.75);      /* カード背景（半透明） */
+            --card-border: rgba(230, 180, 195, 0.18); /* カード枠線色 */
+            --modal-bg: #15131d;                     /* モーダル背景 */
+
+            /* 3. ブランド・アクセントカラー (ローズゴールド / ピンクゴールド) */
+            --accent-primary: #e6b4c3;               /* 主アクセント（柔らかいピンクゴールド） */
+            --accent-secondary: #c893a3;             /* 濃いめアクセント */
+            --accent-glow: rgba(230, 180, 195, 0.35);  /* 光沢・グラデーション用 */
+
+            /* 4. テキストカラー */
+            --text-main: #f3f3f6;                    /* メイン文字色（ホワイト系） */
+            --text-muted: #a39eb0;                   /* 補足文字色（グレー系） */
+        }
+
+        /* 
+        ==========================================================================
+        【★カスタマイズエリア2：背景画像の切り替え（オプション）】
+        背景に画像やパターンを敷きたい場合は、下のコメントアウト(/* ... */)を外してURLを設定してください。
+        ==========================================================================
+        */
+        body {
+            background-color: var(--bg-color-start);
+            background-image: 
+                radial-gradient(circle at 15% 20%, var(--accent-glow) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(180, 140, 200, 0.15) 0%, transparent 45%),
+                linear-gradient(180deg, var(--bg-color-start) 0%, var(--bg-color-end) 100%);
+            /* background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23'); */ /* ← 画像背景にする場合 */
+            background-attachment: fixed;
+            background-size: cover;
+            color: var(--text-main);
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+
+        .custom-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 30px -10px var(--accent-glow);
+            transform: translateY(-4px);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f3d1dc 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
+            color: #1a1520;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(230, 180, 195, 0.25);
+        }
+
+        .btn-gold:hover {
+            box-shadow: 0 6px 22px rgba(230, 180, 195, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-primary) 60%, var(--accent-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 制作実績タブのアクティブスタイル */
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #1a1520;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-pink-300 selection:text-slate-900">
+
+    <!-- ヘッダーナビゲーション -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <span class="font-cinzel text-2xl font-bold tracking-widest text-gold-gradient">MOMOKA</span>
+                <span class="text-xs px-2 py-0.5 rounded border border-pink-300/30 text-pink-200 tracking-wider">CREATOR</span>
+            </a>
+
+            <!-- デスクトップナビ -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#about" class="hover:text-[var(--accent-primary)] transition-colors">About</a>
+                <a href="#works" class="hover:text-[var(--accent-primary)] transition-colors">Works</a>
+                <a href="#plans" class="hover:text-[var(--accent-primary)] transition-colors">Plans</a>
+                <a href="#simulator" class="hover:text-[var(--accent-primary)] transition-colors">Estimate</a>
+                <a href="#contact" class="btn-gold px-5 py-2.5 rounded-full text-xs tracking-wider uppercase">Contact Us</a>
+            </nav>
+
+            <!-- モバイルメニューボタン -->
+            <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-300 hover:text-white p-2">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- モバイルドロワーメニュー -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#15131d] border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="#about" class="block py-2 text-gray-300 hover:text-white">About</a>
+            <a href="#works" class="block py-2 text-gray-300 hover:text-white">Works</a>
+            <a href="#plans" class="block py-2 text-gray-300 hover:text-white">Plans</a>
+            <a href="#simulator" class="block py-2 text-gray-300 hover:text-white">Estimate</a>
+            <a href="#contact" class="block btn-gold text-center py-3 rounded-xl mt-4">Contact Us</a>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest border border-pink-300/30 bg-pink-500/10 text-[var(--accent-primary)] mb-6">
+                Video Creator & Editor
+            </span>
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold font-cinzel tracking-tight leading-tight mb-6">
+                Captivate Your Audience<br>
+                <span class="text-gold-gradient">In Seconds.</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-base sm:text-lg text-[var(--text-muted)] leading-relaxed mb-10">
+                TikTok, Instagram Reels, YouTube ShortsなどのSNS縦型ショート動画を中心に、店舗PR・ブランド映像まで。「思わずスクロールの手が止まる」高品質な映像表現を提供します。
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#works" class="btn-gold w-full sm:w-auto px-8 py-4 rounded-full text-sm font-bold tracking-wider">
+                    制作実績を見る <i class="fa-solid fa-play ml-2 text-xs"></i>
+                </a>
+                <a href="#simulator" class="w-full sm:w-auto px-8 py-4 rounded-full text-sm font-semibold border border-white/20 hover:border-pink-300/50 hover:bg-white/5 transition-all">
+                    料金シミュレーター
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 
+    ==========================================================================
+    【★制作実績 (Works / Portfolio) セクション】
+    ・タブ切り替え対応
+    ・カード形式で実績を紹介
+    ・コピペで実績を追加・編集できます
+    ==========================================================================
+    -->
+    <section id="works" class="py-24 relative border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-gold-gradient tracking-wider">WORKS</h2>
+                <p class="text-sm text-[var(--text-muted)] mt-2">これまでの制作事例・ポートフォリオ</p>
+            </div>
+
+            <div class="custom-card rounded-2xl p-8 text-center mb-8">
+                <i class="fa-solid fa-film text-3xl text-pink-200 mb-4"></i>
+                <h3 class="text-xl font-bold mb-3">制作実績は準備中です</h3>
+                <p class="text-sm text-[var(--text-muted)]">公開可能な作品から順次掲載していきます。制作のご相談はお気軽にお問い合わせください。</p>
+            </div>
+            <!-- 作品追加は下部 JavaScript の portfolioWorks 配列に追記するだけ -->
+            <div id="works-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
+    </section>
+
+    <!-- 動画閲覧モーダル -->
+    <div id="video-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="relative w-full max-w-4xl bg-[var(--modal-bg)] rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <button onclick="closeVideoModal()" class="absolute top-4 right-4 z-10 text-white hover:text-[var(--accent-primary)] text-2xl w-10 h-10 rounded-full bg-black/50 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="relative aspect-video w-full">
+                <iframe id="modal-iframe" class="w-full h-full" src="" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- プラン価格表セクション -->
+    <section id="plans" class="py-24 border-t border-white/5 bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-gold-gradient tracking-wider">PRICING PLANS</h2>
+                <p class="text-sm text-[var(--text-muted)] mt-2">ニーズに合わせた明確な料金プラン</p>
+            </div>
+
+            <p class="text-center text-sm text-[var(--text-muted)] mb-7">料金は1本あたりの目安です。内容・素材量・演出の複雑さによってお見積もりします。</p>
+            <div id="pricing-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div class="custom-card rounded-2xl p-6 sm:p-8 mt-8">
+                <h3 class="text-xl font-bold mb-5">尺別料金比較（税区分はお問い合わせ時にご確認ください）</h3>
+                <div class="overflow-x-auto"><table class="w-full text-sm text-left min-w-[580px]">
+                    <thead><tr class="border-b border-white/20 text-pink-200"><th class="py-3">プラン</th><th>〜30秒</th><th>31〜60秒</th><th>61〜90秒</th></tr></thead>
+                    <tbody id="price-table"></tbody>
+                </table></div>
+                <div class="mt-8 border-t border-white/10 pt-7">
+                    <h3 class="text-xl font-bold mb-2">追加料金のご案内</h3>
+                    <p class="text-xs text-[var(--text-muted)] mb-5">基本料金に含まれない場合のみ加算されます。</p>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="rounded-xl bg-white/5 border border-white/10 p-5"><div class="flex justify-between gap-3 items-start"><strong>完成動画の長さ</strong><strong class="text-pink-200 whitespace-nowrap">＋¥3,000 / 30秒</strong></div><p class="text-xs text-[var(--text-muted)] mt-2">90秒を超える場合。例：91〜120秒は＋¥3,000。TRIALは60秒まで、CUSTOMは個別見積もり。</p></div>
+                        <div class="rounded-xl bg-white/5 border border-white/10 p-5"><div class="flex justify-between gap-3 items-start"><strong>お預かりする素材</strong><strong class="text-pink-200 whitespace-nowrap">＋¥2,000 / 30分</strong></div><p class="text-xs text-[var(--text-muted)] mt-2">素材合計30分までは追加なし。31〜60分で＋¥2,000、61〜90分で＋¥4,000。</p></div>
+                        <div class="rounded-xl bg-white/5 border border-white/10 p-5"><div class="flex justify-between gap-3 items-start"><strong>修正対応</strong><strong class="text-pink-200 whitespace-nowrap">＋¥1,000 / 回</strong></div><p class="text-xs text-[var(--text-muted)] mt-2">2回まで追加なし。3回目から1回につき＋¥1,000。</p></div>
+                        <div class="rounded-xl bg-white/5 border border-white/10 p-5"><div class="flex justify-between gap-3 items-start"><strong>スマホ撮影</strong><strong class="text-pink-200 whitespace-nowrap">＋¥5,000〜</strong></div><p class="text-xs text-[var(--text-muted)] mt-2">撮影の場所・時間・内容により変動。撮影前に個別にご案内します。</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- インタラクティブ見積もりシミュレーター -->
+    <section id="simulator" class="py-24 border-t border-white/5">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="font-cinzel text-3xl font-bold text-gold-gradient">ESTIMATE SIMULATOR</h2>
+                <p class="text-sm text-[var(--text-muted)] mt-2">条件を選ぶだけで概算お見積もりを即時算出</p>
+            </div>
+
+            <div class="custom-card rounded-3xl p-6 sm:p-10">
+                <form id="sim-form" class="space-y-6" oninput="calculateTotal()" onchange="calculateTotal()">
+                    <div><label class="block text-sm font-semibold mb-2 text-pink-200" for="estimate-plan">1. プラン</label><select id="estimate-plan" class="w-full bg-[#211c2a] border border-white/20 rounded-xl p-3"></select></div>
+                    <div><label class="block text-sm font-semibold mb-2 text-pink-200" for="estimate-length">2. 完成動画の長さ</label><select id="estimate-length" class="w-full bg-[#211c2a] border border-white/20 rounded-xl p-3"><option value="30">〜30秒</option><option value="60">31〜60秒</option><option value="90">61〜90秒</option><option value="120">91〜120秒</option><option value="150">121〜150秒</option><option value="180">151〜180秒</option></select></div>
+                    <div><label class="block text-sm font-semibold mb-2 text-pink-200" for="video-count">3. 制作本数</label><input type="number" id="video-count" min="1" max="100" value="1" class="w-full bg-[#211c2a] border border-white/20 rounded-xl p-3"></div>
+                    <div class="grid sm:grid-cols-2 gap-4"><div><label class="block text-sm font-semibold mb-2 text-pink-200" for="source-minutes">4. 素材の合計時間（分 / 1本あたり）</label><input type="number" id="source-minutes" min="0" value="30" class="w-full bg-[#211c2a] border border-white/20 rounded-xl p-3"></div><div><label class="block text-sm font-semibold mb-2 text-pink-200" for="revision-count">5. 修正回数（1本あたり）</label><input type="number" id="revision-count" min="0" value="2" class="w-full bg-[#211c2a] border border-white/20 rounded-xl p-3"></div></div>
+                    <div><label class="block text-sm font-semibold mb-2 text-pink-200" for="shoot-option">6. 撮影のご希望</label><select id="shoot-option" class="w-full bg-[#211c2a] border border-white/20 rounded-xl p-3"><option value="none">撮影なし（素材を自分で用意）</option><option value="smartphone">スマホ撮影を依頼（＋¥5,000〜）</option><option value="consult">撮影方法から相談したい（個別見積もり）</option></select><p class="text-xs text-[var(--text-muted)] mt-2">スマホ撮影は仮に最低料金を加算します。場所・時間・交通費などは別途ご相談。</p></div>
+                    <div class="border-t border-white/10 pt-6"><p class="text-xs text-[var(--text-muted)]">概算合計（確定金額ではありません）</p><div id="total-price" class="text-3xl font-bold text-gold-gradient my-2">¥3,000</div><div id="estimate-breakdown" class="text-xs text-gray-300 space-y-1 my-3" aria-live="polite"></div><p id="estimate-note" class="text-xs text-[var(--text-muted)]"></p><a href="#contact" onclick="copyEstimateToContact()" class="btn-gold inline-block px-7 py-3 rounded-full mt-5 text-sm">この内容でお問い合わせ</a></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- お問い合わせセクション -->
+    <section id="contact" class="py-24 border-t border-white/5 bg-black/30">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-gold-gradient mb-3">CONTACT</h2>
+            <p class="text-sm text-[var(--text-muted)] mb-10">ご相談・お見積もり依頼はメールで承ります。送信ボタンからメールアプリが開きます。</p>
+
+            <form id="contact-form" class="space-y-5 text-left custom-card p-8 rounded-3xl" onsubmit="handleFormSubmit(event)">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-2">お名前 <span class="text-pink-300">*</span></label>
+                    <input id="contact-name" type="text" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-300 transition-colors" placeholder="山田 太郎">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-2">メールアドレス <span class="text-pink-300">*</span></label>
+                    <input id="contact-email" type="email" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-300 transition-colors" placeholder="example@email.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-2">お問い合わせ内容 / ご要望</label>
+                    <textarea id="contact-message" rows="5" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-300 transition-colors" placeholder="ご希望の動画タイプや納期などをご記入ください"></textarea>
+                </div>
+                <button type="submit" class="btn-gold w-full py-4 rounded-xl text-sm font-bold tracking-wider">
+                    メールアプリを開く
+                </button>
+            </form>
+            <p class="text-xs text-[var(--text-muted)] mt-4">※送信先メールアドレスを設定するまで、お問い合わせは送れません。</p>
+            <div id="form-msg" class="hidden mt-4 p-4 rounded-xl bg-pink-500/20 border border-pink-300/30 text-xs text-pink-200"></div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="py-10 border-t border-white/5 text-center text-xs text-[var(--text-muted)]">
+        <p>&copy; 2026 MOMOKA Video Creator. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScriptインタラクション -->
+    <script>
+        // モバイルメニュー切り替え
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // ★作品追加エリア：公開許可を得た作品だけ追加してください。
+        // YouTube動画なら videoUrl に https://www.youtube.com/embed/動画ID を指定。
+        // GitHubに動画をアップする場合は videoUrl に "videos/sample.mp4" のように指定。
+        // thumbnail は画像URLまたは "images/sample.jpg"。空欄なら動画アイコンを表示します。
+        const portfolioWorks = [
+            // { title: "作品タイトル", category: "SNSショート", description: "担当内容や制作意図", thumbnail: "images/sample.jpg", videoUrl: "videos/sample.mp4" },
+        ];
+        const worksGrid = document.getElementById('works-grid');
+        function renderWorks() {
+            const placeholder = document.querySelector('#works .custom-card');
+            if (portfolioWorks.length) placeholder.classList.add('hidden');
+            worksGrid.innerHTML = '';
+            portfolioWorks.forEach(work => {
+                const card = document.createElement('article');
+                card.className = 'custom-card rounded-2xl overflow-hidden';
+                const visual = document.createElement('div');
+                visual.className = 'aspect-video bg-[#292333] flex items-center justify-center relative';
+                if (work.thumbnail) {
+                    const img = document.createElement('img'); img.src = work.thumbnail; img.alt = work.title; img.className = 'w-full h-full object-cover'; visual.appendChild(img);
+                } else { visual.innerHTML = '<i class="fa-solid fa-film text-4xl text-pink-200"></i>'; }
+                const body = document.createElement('div'); body.className = 'p-6';
+                const tag = document.createElement('p'); tag.className = 'text-xs text-pink-200 mb-2'; tag.textContent = work.category || '映像制作';
+                const title = document.createElement('h3'); title.className = 'text-lg font-bold mb-2'; title.textContent = work.title;
+                const desc = document.createElement('p'); desc.className = 'text-xs text-[var(--text-muted)] leading-relaxed'; desc.textContent = work.description || '';
+                body.append(tag,title,desc); card.append(visual,body);
+                if (work.videoUrl) { const play = document.createElement('button'); play.type='button'; play.className='btn-gold rounded-lg px-4 py-2 text-xs mt-4'; play.textContent='動画を見る'; play.addEventListener('click',()=>openVideoModal(work.videoUrl)); body.appendChild(play); }
+                worksGrid.appendChild(card);
+            });
+        }
+        renderWorks();
+        function openVideoModal(url) {
+            const modal = document.getElementById('video-modal');
+            const frame = document.getElementById('modal-iframe');
+            const container = frame.parentElement;
+            container.querySelector('video')?.remove();
+            if (/\.mp4($|\?)/i.test(url)) { frame.classList.add('hidden'); const video=document.createElement('video'); video.src=url; video.controls=true; video.autoplay=true; video.className='w-full h-full'; container.appendChild(video); }
+            else { frame.classList.remove('hidden'); frame.src=url; }
+            modal.classList.remove('opacity-0','pointer-events-none');
+        }
+        function closeVideoModal() {
+            document.getElementById('modal-iframe').src='';
+            document.querySelector('#modal-iframe + video')?.remove();
+            document.getElementById('video-modal').classList.add('opacity-0','pointer-events-none');
+        }
+        // ★料金データ：カード、比較表、シミュレーターは同じ値を参照
+        const plans = [
+            {id:'trial',name:'TRIAL', prices:[3000,3000,null], description:'初回のお試しに。編集内容はご相談ください。'},
+            {id:'basic',name:'BASIC',prices:[5000,8000,11000],description:'基本的な動画編集を依頼したい方向け。'},
+            {id:'standard',name:'STANDARD',prices:[8000,11000,14000],description:'標準的な演出やテキストアニメーションにも対応。'},
+            {id:'premium',name:'PREMIUM',prices:[12000,15000,18000],description:'世界観に合わせたデザイン・独自演出など。'},
+            {id:'custom',name:'CUSTOM',prices:[null,null,null],description:'複雑なアニメーション、独自UI制作など個別見積もり。'}
+        ];
+        const yen = n => n===null ? '要見積もり' : '¥'+n.toLocaleString('ja-JP');
+        const pricingCards=document.getElementById('pricing-cards');
+        const priceTable=document.getElementById('price-table');
+        const planSelect=document.getElementById('estimate-plan');
+        plans.forEach(plan=>{
+            const card=document.createElement('div'); card.className='custom-card rounded-2xl p-7 flex flex-col';
+            const heading=document.createElement('h3');heading.className='text-xl font-bold text-pink-200 mb-3';heading.textContent=plan.name;
+            const price=document.createElement('p');price.className='text-2xl font-bold mb-4';price.textContent=plan.prices[0]===null?'要見積もり':yen(plan.prices[0])+(plan.id==='premium'?'〜':'〜');
+            const desc=document.createElement('p');desc.className='text-sm text-[var(--text-muted)] leading-relaxed flex-1';desc.textContent=plan.description;
+            const link=document.createElement('a');link.href='#simulator';link.className='btn-gold text-center rounded-xl py-3 mt-6 text-sm';link.textContent='料金を試算する';
+            card.append(heading,price,desc,link);pricingCards.appendChild(card);
+            const row=document.createElement('tr');row.className='border-b border-white/10';
+            [plan.name,...plan.prices.map((v,i)=>v===null?(plan.id==='trial'&&i===2?'対象外':'要見積もり'):yen(v)+(plan.id==='premium'?'〜':''))].forEach(t=>{const td=document.createElement('td');td.className='py-3 pr-3';td.textContent=t;row.appendChild(td)});priceTable.appendChild(row);
+            const opt=document.createElement('option');opt.value=plan.id;opt.textContent=plan.name;planSelect.appendChild(opt);
+        });
+        function getEstimate(){
+            const plan=plans.find(p=>p.id===planSelect.value);
+            const seconds=Number(document.getElementById('estimate-length').value);
+            const count=Math.max(1,Number(document.getElementById('video-count').value)||1);
+            const minutes=Math.max(0,Number(document.getElementById('source-minutes').value)||0);
+            const revisions=Math.max(0,Number(document.getElementById('revision-count').value)||0);
+            const shoot=document.getElementById('shoot-option').value;
+            const index=seconds<=30?0:seconds<=60?1:2;
+            let base=plan.prices[index];
+            const needsQuote=plan.id==='custom'||(plan.id==='trial'&&seconds>60)||shoot==='consult';
+            if (seconds>90 && base!==null) base+=Math.ceil((seconds-90)/30)*3000;
+            const extraMaterial=Math.ceil(Math.max(0,minutes-30)/30)*2000;
+            const extraRevisions=Math.max(0,revisions-2)*1000;
+            const shootingFee=shoot==='smartphone'?5000:0;
+            const total=needsQuote?null:(base+extraMaterial+extraRevisions+shootingFee)*count;
+            return {plan,seconds,count,minutes,revisions,shoot,total,needsQuote,base,extraMaterial,extraRevisions,shootingFee};
+        }
+        function calculateTotal(){
+            const e=getEstimate();
+            document.getElementById('total-price').textContent=e.total===null?'個別お見積もり':yen(e.total)+(e.plan.id==='premium'||e.shoot==='smartphone'?'〜':'');
+            document.getElementById('estimate-breakdown').textContent=e.needsQuote?'料金は内容を伺ってからご案内します。':`基本編集：${yen(e.base*e.count)} ／ 素材超過：${yen(e.extraMaterial*e.count)} ／ 修正追加：${yen(e.extraRevisions*e.count)} ／ 撮影：${yen(e.shootingFee*e.count)}`;
+            document.getElementById('estimate-note').textContent=e.needsQuote?'選択したプラン・尺は個別見積もりです。':(e.shoot!=='none'||e.plan.id==='premium'?'撮影や特殊演出の内容により金額が変わります。':'最終金額は内容確認後にご案内します。');
+        }
+        function copyEstimateToContact(){
+            const e=getEstimate();
+            document.getElementById('contact-message').value=`【概算見積もり】\nプラン：${e.plan.name}\n動画の長さ：${e.seconds}秒以内\n本数：${e.count}本\n素材：${e.minutes}分/本\n修正：${e.revisions}回/本\n撮影：${e.shoot==='none'?'なし':e.shoot==='smartphone'?'スマホ撮影を希望':'撮影方法を相談'}\n概算：${document.getElementById('total-price').textContent}\n\n【ご相談内容】\n`;
+        }
+        // ★ここに実際の受信用メールアドレスを設定してください。
+        const CONTACT_EMAIL = '';
+        function handleFormSubmit(e){
+            e.preventDefault();
+            const msg=document.getElementById('form-msg');msg.classList.remove('hidden');
+            if(!CONTACT_EMAIL){msg.textContent='現在メール送信先を設定中です。お問い合わせはまだ送信できません。';return;}
+            const name=document.getElementById('contact-name').value;
+            const email=document.getElementById('contact-email').value;
+            const body=`お名前：${name}\n返信先：${email}\n\n${document.getElementById('contact-message').value}`;
+            window.location.href=`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('動画制作のお問い合わせ')}&body=${encodeURIComponent(body)}`;
+            msg.textContent='メールアプリが開きます。メールアプリ側で送信を完了してください。';
+        }
+        calculateTotal();
+    </script>
+</body>
+</html>
