@@ -385,7 +385,7 @@
             document.getElementById('contact-message').value=`【概算見積もり】\nプラン：${e.plan.name}\n動画の長さ：${e.seconds}秒以内\n本数：${e.count}本\n素材：${e.minutes}分/本\n修正：${e.revisions}回/本\n撮影：${e.shoot==='none'?'なし':e.shoot==='smartphone'?'スマホ撮影を希望':'撮影方法を相談'}\n概算：${document.getElementById('total-price').textContent}\n\n【ご相談内容】\n`;
         }
         // ★ここに実際の受信用メールアドレスを設定してください。
-        const CONTACT_EMAIL = '';
+        const CONTACT_EMAIL = 'momoeky0426@gmail.com';
         function handleFormSubmit(e){
             e.preventDefault();
             const msg=document.getElementById('form-msg');msg.classList.remove('hidden');
