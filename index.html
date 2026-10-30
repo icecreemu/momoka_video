@@ -34,7 +34,12 @@ textarea#contact-message::placeholder {
   color: #C9C5D0 !important;
   opacity: 1;
 }
-
+/* 料金シミュレーターの入力文字だけ白にする */
+#sim-form select,
+#sim-form input {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
         :root {
             /* 1. サイト全体の基本背景（グラデーションの開始色と終了色） */
             --bg-color-start: #0e0d11; /* 背景色（上部・暗め） */
